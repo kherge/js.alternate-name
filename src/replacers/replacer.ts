@@ -1,6 +1,4 @@
 import AlternateName from "main";
-import { App } from "obsidian";
-import { AlternateNameSettings } from "settings";
 
 /**
  * An abstract implementation of a replacer.

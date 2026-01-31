@@ -4,6 +4,10 @@
 # Allow ignore files.
 !.gitignore
 
+# Allow dev container files.
+!/.devcontainer/
+!/.devcontainer/devcontainer.json
+
 # Allow GitHub workflows.
 !/.github/
 !/.github/workflows/

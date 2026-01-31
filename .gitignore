@@ -1,22 +1,38 @@
-# vscode
-.vscode 
+# Convert to allow list.
+*
 
-# Intellij
-*.iml
-.idea
+# Allow ignore files.
+!.gitignore
 
-# npm
-node_modules
+# Allow GitHub workflows.
+!/.github/
+!/.github/workflows/
+!/.github/workflows/*.yml
 
-# Don't include the compiled main.js file in the repo.
-# They should be uploaded to GitHub releases instead.
-main.js
+# Allow source files.
+!/src/
+!/src/**/
+!/src/**/*.ts
 
-# Exclude sourcemaps
-*.map
+!/styles.css
+!/version-bump.mjs
 
-# obsidian
-data.json
+# Allow tool configuration files.
+!/.editorconfig
+!/.npmrc
+!/AGENTS.md
+!/esbuild.config.mjs
+!/eslint.config.mts
+!/tsconfig.json
 
-# Exclude macOS Finder (System Explorer) View States
-.DS_Store
+# Allow license file.
+!/LICENSE
+
+# Allow package manifest.
+!/manifest.json
+!/package.json
+!/package-lock.json
+!/versions.json
+
+# Allow README.
+!/README.md

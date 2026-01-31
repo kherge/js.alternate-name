@@ -1,4 +1,6 @@
 import AlternateName from "main";
+import { TFile } from "obsidian";
+import { getProperty } from "dot-prop";
 
 /**
  * An abstract implementation of a replacer.
@@ -21,6 +23,26 @@ export abstract class Replacer {
      */
     constructor(plugin: AlternateName) {
         this.plugin = plugin;
+    }
+
+    /**
+     * Returns the alternate name for a note.
+     *
+     * @param file The note file.
+     *
+     * @return The alternate name, or null if none exists.
+     */
+    getAlternateName(file: TFile): string | undefined {
+        const metadata = this.plugin.app.metadataCache.getFileCache(file);
+
+        if (metadata?.frontmatter) {
+            return getProperty(
+                metadata.frontmatter,
+                this.plugin.settings.property
+            ) as string | undefined;
+        }
+
+        return undefined;
     }
 
     /**

@@ -1,3 +1,4 @@
+import AlternateName from "main";
 import { App } from "obsidian";
 import { AlternateNameSettings } from "settings";
 
@@ -11,24 +12,17 @@ import { AlternateNameSettings } from "settings";
 export abstract class Replacer {
 
     /**
-     * The Obsidian app.
+     * The plugin.
      */
-    readonly app: App;
+    readonly plugin: AlternateName;
 
     /**
-     * The plugin settings.
-     */
-    readonly settings: AlternateNameSettings;
-
-    /**
-     * Accepts the Obsidian app and settings.
+     * Initializes the replacer.
      *
-     * @param app The Obsidian app.
-     * @param settings The plugin settings.
+     * @param plugin The plugin instance.
      */
-    constructor(app: App, settings: AlternateNameSettings) {
-        this.app = app;
-        this.settings = settings;
+    constructor(plugin: AlternateName) {
+        this.plugin = plugin;
     }
 
     /**

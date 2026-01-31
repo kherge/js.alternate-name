@@ -33,10 +33,10 @@ export default class AlternateName extends Plugin {
 			}
 		};
 
-		addReplacer("replaceInCanvases", () => new CanvasReplacer(this.app, this.settings));
-		addReplacer("replaceInFiles", () => new FilesReplacer(this.app, this.settings));
-		addReplacer("replaceInGraph", () => new GraphReplacer(this.app, this.settings));
-		addReplacer("replaceInTabs", () => new TabsReplacer(this.app, this.settings));
+		addReplacer("replaceInCanvases", () => new CanvasReplacer(this));
+		addReplacer("replaceInFiles", () => new FilesReplacer(this));
+		addReplacer("replaceInGraph", () => new GraphReplacer(this));
+		addReplacer("replaceInTabs", () => new TabsReplacer(this));
 	}
 
 	onunload() {

@@ -5,14 +5,12 @@ import {
 	AlternateNameSettingTab
 } from "./settings";
 import {
-	CanvasReplacer,
 	FilesReplacer,
 	Replacer,
 	TabsReplacer
 } from 'replacers';
 
 enum Replacers {
-	Canvases = "replaceInCanvases",
 	Files = "replaceInFiles",
 	Tabs = "replaceInTabs"
 }
@@ -25,7 +23,6 @@ export default class AlternateName extends Plugin {
 	 * The replacers.
 	 */
 	replacers: Record<Replacers, Replacer> = {
-		[Replacers.Canvases]: new CanvasReplacer(this, false),
 		[Replacers.Files]: new FilesReplacer(this, false),
 		[Replacers.Tabs]: new TabsReplacer(this, false)
 	};
@@ -43,7 +40,6 @@ export default class AlternateName extends Plugin {
 
 		this.addSettingTab(new AlternateNameSettingTab(this.app, this));
 
-		this.replacers[Replacers.Canvases].setActivated(this.settings.replaceInCanvases);
 		this.replacers[Replacers.Files].setActivated(this.settings.replaceInFiles);
 		this.replacers[Replacers.Tabs].setActivated(this.settings.replaceInTabs);
 	}

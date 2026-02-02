@@ -3,17 +3,13 @@ import AlternateName from "./main";
 
 export interface AlternateNameSettings {
 	property: string;
-	replaceInCanvases: boolean;
 	replaceInFiles: boolean;
-	replaceInGraph: boolean;
 	replaceInTabs: boolean;
 }
 
 export const DEFAULT_SETTINGS: AlternateNameSettings = {
 	property: 'aliases.0',
-	replaceInCanvases: true,
 	replaceInFiles: true,
-	replaceInGraph: true,
 	replaceInTabs: true,
 }
 
@@ -42,32 +38,12 @@ export class AlternateNameSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('Replace in Canvases')
-			.setDesc('Whether to replace names in canvas views.')
-			.addToggle(toggle => toggle
-				.setValue(this.plugin.settings.replaceInCanvases)
-				.onChange(async (value) => {
-					this.plugin.settings.replaceInCanvases = value;
-					await this.plugin.saveSettings();
-				}));
-
-		new Setting(containerEl)
 			.setName('Replace in Files')
 			.setDesc('Whether to replace names in the file browser.')
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.replaceInFiles)
 				.onChange(async (value) => {
 					this.plugin.settings.replaceInFiles = value;
-					await this.plugin.saveSettings();
-				}));
-
-		new Setting(containerEl)
-			.setName('Replace in Graph')
-			.setDesc('Whether to replace names in graph views.')
-			.addToggle(toggle => toggle
-				.setValue(this.plugin.settings.replaceInGraph)
-				.onChange(async (value) => {
-					this.plugin.settings.replaceInGraph = value;
 					await this.plugin.saveSettings();
 				}));
 

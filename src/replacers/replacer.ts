@@ -1,6 +1,6 @@
 import AlternateName from "main";
 import { TFile } from "obsidian";
-import { getProperty } from "dot-prop";
+import delve from "dlv";
 
 /**
  * An abstract implementation of a replacer.
@@ -36,7 +36,8 @@ export abstract class Replacer {
         const metadata = this.plugin.app.metadataCache.getFileCache(file);
 
         if (metadata?.frontmatter) {
-            return getProperty(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+            return delve(
                 metadata.frontmatter,
                 this.plugin.settings.property
             ) as string | undefined;

@@ -10,4 +10,4 @@ Usage
 
 TODO Installation steps.
 
-By default, the first alias (`aliases[0]`) for a note will be used as the alternate title. This can be changed to any value in the frontmatter by using [a valid Lodash `get()` path](https://lodash.com/docs/4.17.23#get).
+By default, the first alias (`aliases.0`) for a note will be used as the alternate title. This can be changed to any value in the frontmatter by using [a valid `delve()` path](https://www.npmjs.com/package/dlv).

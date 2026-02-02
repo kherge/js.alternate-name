@@ -10,7 +10,7 @@ export interface AlternateNameSettings {
 }
 
 export const DEFAULT_SETTINGS: AlternateNameSettings = {
-	property: 'aliases[0]',
+	property: 'aliases.0',
 	replaceInCanvases: true,
 	replaceInFiles: true,
 	replaceInGraph: true,
@@ -34,7 +34,7 @@ export class AlternateNameSettingTab extends PluginSettingTab {
 			.setName('Property')
 			.setDesc('The frontmatter property to use for alternate names.')
 			.addText(text => text
-				.setPlaceholder('A valid Lodash get() path')
+				.setPlaceholder('A valid delve() path')
 				.setValue(this.plugin.settings.property)
 				.onChange(async (value) => {
 					this.plugin.settings.property = value;

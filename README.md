@@ -1,7 +1,9 @@
 Alternate Name
 ==============
 
-> [!important] Low Effort
+> [!important]
+>
+> This is low effort.
 >
 > Obsidian's public API generally does not support what this plugin attempts to do, and hacky methods need to be employed to get what little functionality is provided working. I may end up abandoning this plugin and moving to another app if substantial internal API changes are made.
 >

@@ -12,39 +12,72 @@ import {
 	TabsReplacer
 } from 'replacers';
 
+enum Replacers {
+	Canvases = "replaceInCanvases",
+	Files = "replaceInFiles",
+	Graph = "replaceInGraph",
+	Tabs = "replaceInTabs"
+}
+
+/**
+ * {@inheritdoc}
+ */
 export default class AlternateName extends Plugin {
-	replacers: Replacer[];
+	/**
+	 * The activated replacers.
+	 */
+	activated: Record<string, Replacer> = {};
+
+	/**
+	 * The list of replacers available for use.
+	 */
+	available: Record<Replacers, Replacer> = {
+		[Replacers.Canvases]: new CanvasReplacer(this),
+		[Replacers.Files]: new FilesReplacer(this),
+		[Replacers.Graph]: new GraphReplacer(this),
+		[Replacers.Tabs]: new TabsReplacer(this)
+	};
+
+	/**
+	 * The current plugin settings.
+	 */
 	settings: AlternateNameSettings;
 
+	/**
+	 * {@inheritdoc}
+	 */
 	async onload() {
-		this.replacers = [];
-
 		await this.loadSettings();
 
 		this.addSettingTab(new AlternateNameSettingTab(this.app, this));
 
-		const addReplacer = (setting: keyof AlternateNameSettings, replacer: () => Replacer) => {
-			if (setting) {
-				const instance = replacer();
-
-				this.replacers.push(instance);
-
-				instance.register();
+		const addReplacer = (setting: Replacers) => {
+			if (this.settings[setting]) {
+				this.activated[setting] = this.available[setting];
+				this.activated[setting].register();
 			}
 		};
 
-		addReplacer("replaceInCanvases", () => new CanvasReplacer(this));
-		addReplacer("replaceInFiles", () => new FilesReplacer(this));
-		addReplacer("replaceInGraph", () => new GraphReplacer(this));
-		addReplacer("replaceInTabs", () => new TabsReplacer(this));
+		addReplacer(Replacers.Canvases);
+		addReplacer(Replacers.Files);
+		addReplacer(Replacers.Graph);
+		addReplacer(Replacers.Tabs);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	onunload() {
-		for (const replacer of this.replacers) {
+		Object.values(this.activated).forEach((replacer) => {
 			replacer.unregister();
-		}
+		});
+
+		this.activated = {};
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	async loadSettings() {
 		this.settings = Object.assign(
 			{},
@@ -53,7 +86,22 @@ export default class AlternateName extends Plugin {
 		);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	async saveSettings() {
 		await this.saveData(this.settings);
+
+		Object.values(Replacers).forEach((setting) => {
+			if (this.settings[setting] && !this.activated[setting]) {
+				this.activated[setting] = this.available[setting];
+				this.activated[setting].register();
+			}
+
+			if (!this.settings[setting] && this.activated[setting]) {
+				this.activated[setting].unregister();
+				delete this.activated[setting];
+			}
+		});
 	}
 }

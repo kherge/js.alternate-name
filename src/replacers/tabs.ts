@@ -51,7 +51,11 @@ export class TabsReplacer extends Replacer {
     }
 
     /**
-     * ?
+     * Gets the file for a given Markdown view.
+     *
+     * @param view The Markdown view.
+     *
+     * @returns The note file, or null if not found.
      */
     getFileForView(view: MarkdownView): TFile | null {
         return view.file || this.getFile(view.getState().file as string);

@@ -7,7 +7,6 @@ import {
 import {
 	CanvasReplacer,
 	FilesReplacer,
-	GraphReplacer,
 	Replacer,
 	TabsReplacer
 } from 'replacers';
@@ -15,7 +14,6 @@ import {
 enum Replacers {
 	Canvases = "replaceInCanvases",
 	Files = "replaceInFiles",
-	Graph = "replaceInGraph",
 	Tabs = "replaceInTabs"
 }
 
@@ -34,7 +32,6 @@ export default class AlternateName extends Plugin {
 	available: Record<Replacers, Replacer> = {
 		[Replacers.Canvases]: new CanvasReplacer(this),
 		[Replacers.Files]: new FilesReplacer(this),
-		[Replacers.Graph]: new GraphReplacer(this),
 		[Replacers.Tabs]: new TabsReplacer(this)
 	};
 
@@ -60,7 +57,6 @@ export default class AlternateName extends Plugin {
 
 		addReplacer(Replacers.Canvases);
 		addReplacer(Replacers.Files);
-		addReplacer(Replacers.Graph);
 		addReplacer(Replacers.Tabs);
 	}
 

@@ -160,14 +160,14 @@ export class TabsReplacer extends Replacer {
         this.plugin.registerEvent(
             this.plugin.app.metadataCache.on(
                 "changed",
-                (file) => this.onModifiedMetadata(file)
+                (file) => this.ifActivated(() => this.onModifiedMetadata(file))
             )
         );
 
         this.plugin.registerEvent(
             this.plugin.app.workspace.on(
                 "layout-change",
-                () => this.onLayoutChange()
+                () => this.ifActivated(() => this.onLayoutChange())
             )
         );
     }

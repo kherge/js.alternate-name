@@ -22,17 +22,12 @@ enum Replacers {
  */
 export default class AlternateName extends Plugin {
 	/**
-	 * The activated replacers.
+	 * The replacers.
 	 */
-	activated: Record<string, Replacer> = {};
-
-	/**
-	 * The list of replacers available for use.
-	 */
-	available: Record<Replacers, Replacer> = {
-		[Replacers.Canvases]: new CanvasReplacer(this),
-		[Replacers.Files]: new FilesReplacer(this),
-		[Replacers.Tabs]: new TabsReplacer(this)
+	replacers: Record<Replacers, Replacer> = {
+		[Replacers.Canvases]: new CanvasReplacer(this, false),
+		[Replacers.Files]: new FilesReplacer(this, false),
+		[Replacers.Tabs]: new TabsReplacer(this, false)
 	};
 
 	/**
@@ -48,27 +43,18 @@ export default class AlternateName extends Plugin {
 
 		this.addSettingTab(new AlternateNameSettingTab(this.app, this));
 
-		const addReplacer = (setting: Replacers) => {
-			if (this.settings[setting]) {
-				this.activated[setting] = this.available[setting];
-				this.activated[setting].register();
-			}
-		};
-
-		addReplacer(Replacers.Canvases);
-		addReplacer(Replacers.Files);
-		addReplacer(Replacers.Tabs);
+		this.replacers[Replacers.Canvases].setActivated(this.settings.replaceInCanvases);
+		this.replacers[Replacers.Files].setActivated(this.settings.replaceInFiles);
+		this.replacers[Replacers.Tabs].setActivated(this.settings.replaceInTabs);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	onunload() {
-		Object.values(this.activated).forEach((replacer) => {
-			replacer.unregister();
+		Object.values(this.replacers).forEach((replacer) => {
+			replacer.setActivated(false);
 		});
-
-		this.activated = {};
 	}
 
 	/**
@@ -89,15 +75,7 @@ export default class AlternateName extends Plugin {
 		await this.saveData(this.settings);
 
 		Object.values(Replacers).forEach((setting) => {
-			if (this.settings[setting] && !this.activated[setting]) {
-				this.activated[setting] = this.available[setting];
-				this.activated[setting].register();
-			}
-
-			if (!this.settings[setting] && this.activated[setting]) {
-				this.activated[setting].unregister();
-				delete this.activated[setting];
-			}
+			this.replacers[setting].setActivated(this.settings[setting]);
 		});
 	}
 }

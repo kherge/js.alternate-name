@@ -12,6 +12,11 @@ import delve from "dlv";
 export abstract class Replacer {
 
     /**
+     * The current activation state.
+     */
+    private activated: boolean;
+
+    /**
      * The plugin.
      */
     readonly plugin: AlternateName;
@@ -19,9 +24,11 @@ export abstract class Replacer {
     /**
      * Initializes the replacer.
      *
-     * @param plugin The plugin instance.
+     * @param plugin    The plugin instance.
+     * @param activated The initial activation state.
      */
-    constructor(plugin: AlternateName) {
+    constructor(plugin: AlternateName, activated: boolean) {
+        this.activated = activated;
         this.plugin = plugin;
     }
 
@@ -55,6 +62,41 @@ export abstract class Replacer {
      */
     getFile(path: string): TFile | null {
         return this.plugin.app.vault.getAbstractFileByPath(path) as TFile | null;
+    }
+
+    /**
+     * Executes a function if the replacer is activated.
+     *
+     * @param fn The function to execute.
+     */
+    ifActivated(fn: () => void) {
+        if (this.activated) {
+            fn();
+        }
+    }
+
+    /**
+     * Checks if the replacer is activated.
+     *
+     * @return True if activated, false otherwise.
+     */
+    isActivated(): boolean {
+        return this.activated;
+    }
+
+    /**
+     * Sets the activation state of the replacer.
+     *
+     * @param activated The new activation state.
+     */
+    setActivated(activated: boolean): void {
+        this.activated = activated;
+
+        if (this.activated) {
+            this.register();
+        } else {
+            this.unregister();
+        }
     }
 
     /**

@@ -48,8 +48,6 @@ export class FilesReplacer extends Replacer {
     onModifiedMetadata(file: TFile) {
         const item = this.findItemByPath(file.path);
 
-        console.debug(file.path, item);
-
         if (item) {
             this.replaceName(item, this.getAlternateName(file) || file.basename);
         }

@@ -38,7 +38,7 @@ export class AlternateNameSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('Replace in Files')
+			.setName('Replace in files?')
 			.setDesc('Whether to replace names in the file browser.')
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.replaceInFiles)
@@ -48,7 +48,7 @@ export class AlternateNameSettingTab extends PluginSettingTab {
 				}));
 
 		new Setting(containerEl)
-			.setName('Replace in Tabs')
+			.setName('Replace in tabs?')
 			.setDesc('Whether to replace names in tab views.')
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.replaceInTabs)

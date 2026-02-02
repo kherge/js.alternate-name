@@ -47,6 +47,17 @@ export abstract class Replacer {
     }
 
     /**
+     * Retrieves a file by its path.
+     *
+     * @param path The file path.
+     *
+     * @return The note file, or null if not found.
+     */
+    getFile(path: string): TFile | null {
+        return this.plugin.app.vault.getAbstractFileByPath(path) as TFile | null;
+    }
+
+    /**
      * Registers the replacer with Obsidian.
      */
     abstract register(): void;
